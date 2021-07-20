@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bufio"
 	"context"
 	"fmt"
 	"log"
@@ -19,7 +20,20 @@ var client *mongo.Client
 var boardsCollection *mongo.Collection
 
 func main() {
-	uri := os.Getenv("MONGO_STR") + "&tlsCAFile=" + os.Getenv("CA_CERT")
+	uri := os.Getenv("MONGO_STR")
+	if os.Getenv("CA_CERT") != "" {
+		file, err := os.Create("/tmp/cert.crt")
+		if err != nil {
+			log.Fatal(err)
+		}
+		writer := bufio.NewWriter(file)
+		_, err = writer.WriteString(os.Getenv("CA_CERT"))
+		if err != nil {
+			log.Fatalf("Got error while writing to a file. Err: %s", err.Error())
+		}
+		writer.Flush()
+		uri = uri + "&tlsCAFile=/tmp/cert.crt"
+	}
 	fmt.Println(uri)
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
