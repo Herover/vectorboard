@@ -21,7 +21,7 @@ var boardsCollection *mongo.Collection
 func main() {
 	// Replace the uri string with your MongoDB deployment's connection string.
 	uri := os.Getenv("MONGO_STR")
-	// export MONGO_STR=mongodb+srv://doadmin:19i4UAm8CWK0325D@vectorboard-data-47dcec53.mongo.ondigitalocean.com/?authSource=admin\&tls=true\&tlsCAFile=./ca-certificate.crt
+	fmt.Print(uri)
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 	var err error
