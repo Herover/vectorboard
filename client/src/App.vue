@@ -1,38 +1,8 @@
 <template>
   <div id="app">
-    <BoardList v-bind:boards="boards"/>
+    <router-view/>
   </div>
 </template>
-
-<script>
-import BoardList from './components/BoardList.vue'
-
-export default {
-  name: 'App',
-  components: {
-    BoardList
-  },
-  data: () => ({
-    boards: [],
-  }),
-  mounted: function() {
-    this.fetchBoards()
-  },
-  methods: {
-    fetchBoards: function () {
-      fetch('http://localhost:8080/boards')
-        .then(resp => {
-          if (resp.ok) {
-            return resp.json()
-          }
-        })
-        .then(json => {
-          this.boards = json.data;
-        });
-    }
-  }
-}
-</script>
 
 <style>
 #app {
@@ -40,6 +10,18 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
-  margin-top: 60px;
+}
+
+#nav {
+  padding: 30px;
+}
+
+#nav a {
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+#nav a.router-link-exact-active {
+  color: #42b983;
 }
 </style>

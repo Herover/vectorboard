@@ -1,7 +1,7 @@
 <template>
   <ul class="board-list">
     <li v-for="board in boards" v-bind:key="board._id">
-      {{ board.name }}
+      <router-link :to="'/board/' + board.id">{{ board.name }}</router-link>
     </li>
   </ul>
 </template>
