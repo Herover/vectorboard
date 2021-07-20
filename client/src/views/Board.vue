@@ -27,8 +27,7 @@ export default {
     hidden: false,
   }),
   watch: {
-    hidden: async function(oldVal, newVal) {
-      console.log(API_BASE)
+    hidden: async function(/* oldVal, newVal */) {
       const resp = await fetch(`${API_BASE}/boards/${this.$route.params.id}`, {
         method: 'PUT',
         headers: {
@@ -36,7 +35,7 @@ export default {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          hidden: newVal,
+          hidden: this.hidden,
         }),
       });
       const content = await resp.json();
