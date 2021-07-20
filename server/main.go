@@ -19,8 +19,7 @@ var client *mongo.Client
 var boardsCollection *mongo.Collection
 
 func main() {
-	// Replace the uri string with your MongoDB deployment's connection string.
-	uri := os.Getenv("MONGO_STR")
+	uri := os.Getenv("MONGO_STR") + "&tlsCAFile=" + os.Getenv("CA_CERT")
 	fmt.Println(uri)
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
