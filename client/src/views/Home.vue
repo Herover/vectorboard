@@ -10,6 +10,7 @@
 <script>
 // @ is an alias to /src
 import BoardList from '@/components/BoardList.vue'
+import { API_BASE } from '@/config.js'
 
 export default {
   name: 'Home',
@@ -25,7 +26,8 @@ export default {
   },
   methods: {
     fetchBoards: function () {
-      fetch('http://localhost:8080/boards')
+      console.log(API_BASE)
+      fetch(API_BASE + '/boards')
         .then(resp => {
           if (resp.ok) {
             return resp.json()

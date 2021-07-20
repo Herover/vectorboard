@@ -15,6 +15,8 @@
   </div>
 </template>
 <script>
+import { API_BASE, WS_BASE } from '@/config.js'
+
 export default {
   name: 'Board',
   components: {
@@ -26,7 +28,8 @@ export default {
   }),
   watch: {
     hidden: async function(oldVal, newVal) {
-      const resp = await fetch('http://localhost:8080/boards/' + this.$route.params.id, {
+      console.log(API_BASE)
+      const resp = await fetch(`${API_BASE}/boards/${this.$route.params.id}`, {
         method: 'PUT',
         headers: {
           'Accept': 'application/json',
@@ -42,7 +45,7 @@ export default {
   },
   mounted: function() {
     /** @type {WebSocket} */
-    var socket = new WebSocket('ws://localhost:8080/ws/' + this.$route.params.id);
+    var socket = new WebSocket(WS_BASE + this.$route.params.id);
     socket.onmessage = (event) => {
       console.log(event);
     }
@@ -70,7 +73,7 @@ export default {
   },
   methods: {
     fetchBoard: function () {
-      fetch('http://localhost:8080/boards/' + this.$route.params.id)
+      fetch(`${API_BASE}/boards/${this.$route.params.id}`)
         .then(resp => {
           if (resp.ok) {
             return resp.json()
@@ -86,7 +89,7 @@ export default {
         });
     },
     deleteBoard: async function() {
-      const resp = await fetch('http://localhost:8080/boards/' + this.$route.params.id, {
+      const resp = await fetch(`${API_BASE}/boards/${this.$route.params.id}`, {
         method: 'DELETE',
         headers: {
           'Accept': 'application/json',
@@ -111,7 +114,7 @@ export default {
       */
     },
     sendUpdate: async function(action, data) {
-        const resp = await fetch('http://localhost:8080/boards/' + this.$route.params.id, {
+        const resp = await fetch(`${API_BASE}/boards/${this.$route.params.id}`, {
           method: 'POST',
           headers: {
             'Accept': 'application/json',
