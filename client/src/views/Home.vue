@@ -39,7 +39,7 @@ export default {
     },
     createNewBoard: async function () {
       console.log("CREATING");
-        const resp = await fetch('http://localhost:8080/boards', {
+        const resp = await fetch(`${API_BASE}/boards`, {
           method: 'POST',
           headers: {
             'Accept': 'application/json',
